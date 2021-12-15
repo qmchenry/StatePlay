@@ -14,6 +14,9 @@
 		A95E226A27697C71004EADF2 /* StatePlayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95E226927697C71004EADF2 /* StatePlayTests.swift */; };
 		A95E227427697C71004EADF2 /* StatePlayUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95E227327697C71004EADF2 /* StatePlayUITests.swift */; };
 		A95E227627697C71004EADF2 /* StatePlayUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95E227527697C71004EADF2 /* StatePlayUITestsLaunchTests.swift */; };
+		A95E2283276A40F5004EADF2 /* MenuBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95E2282276A40F5004EADF2 /* MenuBar.swift */; };
+		A95E2285276A41CF004EADF2 /* Bevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95E2284276A41CF004EADF2 /* Bevel.swift */; };
+		A95E2287276A41FD004EADF2 /* IconicButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95E2286276A41FD004EADF2 /* IconicButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +47,9 @@
 		A95E226F27697C71004EADF2 /* StatePlayUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StatePlayUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A95E227327697C71004EADF2 /* StatePlayUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatePlayUITests.swift; sourceTree = "<group>"; };
 		A95E227527697C71004EADF2 /* StatePlayUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatePlayUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		A95E2282276A40F5004EADF2 /* MenuBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBar.swift; sourceTree = "<group>"; };
+		A95E2284276A41CF004EADF2 /* Bevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bevel.swift; sourceTree = "<group>"; };
+		A95E2286276A41FD004EADF2 /* IconicButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconicButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +102,9 @@
 			children = (
 				A95E225827697C70004EADF2 /* StatePlayApp.swift */,
 				A95E225A27697C70004EADF2 /* ContentView.swift */,
+				A95E2284276A41CF004EADF2 /* Bevel.swift */,
+				A95E2286276A41FD004EADF2 /* IconicButton.swift */,
+				A95E2282276A40F5004EADF2 /* MenuBar.swift */,
 				A95E225C27697C71004EADF2 /* Assets.xcassets */,
 				A95E225E27697C71004EADF2 /* Preview Content */,
 			);
@@ -257,8 +266,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A95E2285276A41CF004EADF2 /* Bevel.swift in Sources */,
+				A95E2287276A41FD004EADF2 /* IconicButton.swift in Sources */,
 				A95E225B27697C70004EADF2 /* ContentView.swift in Sources */,
 				A95E225927697C70004EADF2 /* StatePlayApp.swift in Sources */,
+				A95E2283276A40F5004EADF2 /* MenuBar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
