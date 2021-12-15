@@ -10,43 +10,56 @@ import SwiftUI
 struct ContentView: View {
     let fillColor = Color(white: 0.8)
     var body: some View {
-        depth(inner: false,
-            VStack {
-                HStack(spacing: 5) {
-                    Spacer()
-                    depth(icon(Text("_").font(.largeTitle).padding(.bottom, 10)))
-                    depth(icon(Text("❒").font(.largeTitle)))
-                    depth(icon(Text("X").font(.largeTitle)))
-                        .padding(5)
-                }
-                .background(Color.black)
-                .padding([.top, .horizontal], 5)
-                    depth(inner: true, VStack {
-                        HStack(spacing: 40) {
-                            depth(inner: true, box("1"))
-                            depth(inner: true, box("00:00"))
-                        }
-                        .font(.largeTitle)
-
-                        HStack(spacing: 0) {
-                            depth(icon(Image(systemName: "play.fill")).frame(width: 60))
-                            depth(icon(Image(systemName: "pause")))
-                            depth(icon(Image(systemName: "stop.fill")))
-                            depth(icon(Image(systemName: "backward.end.fill")))
-                            depth(icon(Image(systemName: "backward.fill")))
-                            depth(icon(Image(systemName: "forward.fill")))
-                            depth(icon(Image(systemName: "forward.end.fill")))
-                            depth(icon(Image(systemName: "eject.fill")))
-                        }
-                        .padding(.vertical, 15)
-                    }
-                    .padding(.vertical, 25)
-                    .frame(maxWidth: .infinity)
-                    )
-                .padding([.bottom, .horizontal], 5)
+        VStack {
+            HStack(spacing: 5) {
+                Spacer()
+                icon(Text("_").padding(.bottom, 10))
+                    .beveled(.up)
+                icon(Text("❒"))
+                    .beveled(.up)
+                icon(Text("X"))
+                    .beveled(.up)
+                    .padding(5)
             }
-            .background(fillColor)
-        )
+            .font(.largeTitle)
+            .background(Color.black)
+            .padding([.top, .horizontal], 5)
+            VStack {
+                HStack(spacing: 40) {
+                    box("1")
+                        .beveled(.down)
+                    box("00:00")
+                        .beveled(.down)
+                }
+                .font(.largeTitle)
+
+                HStack(spacing: 0) {
+                    icon(Image(systemName: "play.fill")).frame(width: 60)
+                        .beveled(.up)
+                    icon(Image(systemName: "pause"))
+                        .beveled(.up)
+                    icon(Image(systemName: "stop.fill"))
+                        .beveled(.up)
+                    icon(Image(systemName: "backward.end.fill"))
+                        .beveled(.up)
+                    icon(Image(systemName: "backward.fill"))
+                        .beveled(.up)
+                    icon(Image(systemName: "forward.fill"))
+                        .beveled(.up)
+                    icon(Image(systemName: "forward.end.fill"))
+                        .beveled(.up)
+                    icon(Image(systemName: "eject.fill"))
+                        .beveled(.up)
+                }
+                .padding(.vertical, 15)
+            }
+            .padding(.vertical, 25)
+            .frame(maxWidth: .infinity)
+            .beveled(.down)
+            .padding([.bottom, .horizontal], 5)
+        }
+        .background(fillColor)
+        .beveled(.up)
         .padding()
     }
 
@@ -64,29 +77,63 @@ struct ContentView: View {
             .frame(width: 110, height: 60)
             .overlay(Text(text))
     }
-
-    // todo: make this a modifier
-    func depth<V>(inner: Bool = false, _ contents: V) -> some View where V: View {
-        let tlColor = inner ? Color.black : Color.white
-        let btColor = inner ? Color.white : Color.black
-        return contents
-            .overlay(Rectangle()
-                        .fill(tlColor)
-                        .frame(height: 2), alignment: .topLeading)
-            .overlay(Rectangle()
-                        .fill(tlColor)
-                        .frame(width: 2), alignment: .leading)
-            .overlay(Rectangle()
-                        .fill(btColor)
-                        .frame(height: 2), alignment: .bottomTrailing)
-            .overlay(Rectangle()
-                        .fill(btColor)
-                        .frame(width: 2), alignment: .trailing)
-    }
- }
+}
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+    }
+}
+
+//public struct IconicButtonStyle: ButtonStyle {
+//    @Environment(\.isEnabled) var isEnabled: Bool
+//
+//    public func makeBody(configuration: Configuration) -> some View {
+//        let background = RoundedRectangle(cornerRadius: 14, style: .continuous)
+//            .fill(color(for: configuration))
+//
+//        configuration
+//            .label
+//            .padding()
+//            .foregroundColor(isEnabled ? primaryColor : disabled)
+//            .background(background)
+//    }
+//}
+
+struct BevelModifier: ViewModifier {
+    enum Style {
+        case up
+        case down
+    }
+    let style: Style
+
+    func body(content: Content) -> some View {
+        content
+            .overlay(Rectangle()
+                        .fill(topLeadingColor)
+                        .frame(height: 2), alignment: .topLeading)
+            .overlay(Rectangle()
+                        .fill(topLeadingColor)
+                        .frame(width: 2), alignment: .leading)
+            .overlay(Rectangle()
+                        .fill(bottomTrailingColor)
+                        .frame(height: 2), alignment: .bottomTrailing)
+            .overlay(Rectangle()
+                        .fill(bottomTrailingColor)
+                        .frame(width: 2), alignment: .trailing)
+    }
+
+    var topLeadingColor: Color {
+        style == .down ? Color.black : Color.white
+    }
+
+    var bottomTrailingColor: Color {
+        style == .up ? Color.black : Color.white
+    }
+}
+
+extension View {
+    func beveled(_ style: BevelModifier.Style) -> some View {
+        modifier(BevelModifier(style: style))
     }
 }
