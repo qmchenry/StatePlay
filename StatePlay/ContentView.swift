@@ -17,11 +17,10 @@ struct ContentView: View {
                     depth(icon(Text("_").font(.largeTitle).padding(.bottom, 10)))
                     depth(icon(Text("❒").font(.largeTitle)))
                     depth(icon(Text("X").font(.largeTitle)))
-                        .padding(10)
+                        .padding(5)
                 }
                 .background(Color.black)
-                .padding(5)
-
+                .padding([.top, .horizontal], 5)
                     depth(inner: true, VStack {
                         HStack(spacing: 40) {
                             depth(inner: true, box("1"))
@@ -44,13 +43,14 @@ struct ContentView: View {
                     .padding(.vertical, 25)
                     .frame(maxWidth: .infinity)
                     )
-                        .padding(5)
+                .padding([.bottom, .horizontal], 5)
             }
             .background(fillColor)
         )
         .padding()
     }
 
+    // todo: make this a button style to allow disabling
     func icon<V>(_ contents: V) -> some View where V: View {
         Rectangle()
             .fill(Color(white: 0.8))
@@ -65,6 +65,7 @@ struct ContentView: View {
             .overlay(Text(text))
     }
 
+    // todo: make this a modifier
     func depth<V>(inner: Bool = false, _ contents: V) -> some View where V: View {
         let tlColor = inner ? Color.black : Color.white
         let btColor = inner ? Color.white : Color.black
