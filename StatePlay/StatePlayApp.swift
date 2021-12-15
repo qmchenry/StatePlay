@@ -11,7 +11,8 @@ import SwiftUI
 struct StatePlayApp: App {
     var body: some Scene {
         WindowGroup {
-            PlayerStatic()
+//            PlayerStatic()
+            PlayerNaturalState()
         }
     }
 }

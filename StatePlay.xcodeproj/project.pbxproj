@@ -18,6 +18,7 @@
 		A95E2285276A41CF004EADF2 /* Bevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95E2284276A41CF004EADF2 /* Bevel.swift */; };
 		A95E2287276A41FD004EADF2 /* IconicButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95E2286276A41FD004EADF2 /* IconicButton.swift */; };
 		A95E2289276A7CA5004EADF2 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95E2288276A7CA5004EADF2 /* Colors.swift */; };
+		A95E228B276A81B3004EADF2 /* PlayerNaturalState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95E228A276A81B3004EADF2 /* PlayerNaturalState.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +53,7 @@
 		A95E2284276A41CF004EADF2 /* Bevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bevel.swift; sourceTree = "<group>"; };
 		A95E2286276A41FD004EADF2 /* IconicButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconicButton.swift; sourceTree = "<group>"; };
 		A95E2288276A7CA5004EADF2 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		A95E228A276A81B3004EADF2 /* PlayerNaturalState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerNaturalState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +106,7 @@
 			children = (
 				A95E225827697C70004EADF2 /* StatePlayApp.swift */,
 				A95E225A27697C70004EADF2 /* PlayerStatic.swift */,
+				A95E228A276A81B3004EADF2 /* PlayerNaturalState.swift */,
 				A95E2284276A41CF004EADF2 /* Bevel.swift */,
 				A95E2286276A41FD004EADF2 /* IconicButton.swift */,
 				A95E2282276A40F5004EADF2 /* MenuBar.swift */,
@@ -272,6 +275,7 @@
 				A95E2285276A41CF004EADF2 /* Bevel.swift in Sources */,
 				A95E2289276A7CA5004EADF2 /* Colors.swift in Sources */,
 				A95E2287276A41FD004EADF2 /* IconicButton.swift in Sources */,
+				A95E228B276A81B3004EADF2 /* PlayerNaturalState.swift in Sources */,
 				A95E225B27697C70004EADF2 /* PlayerStatic.swift in Sources */,
 				A95E225927697C70004EADF2 /* StatePlayApp.swift in Sources */,
 				A95E2283276A40F5004EADF2 /* MenuBar.swift in Sources */,
