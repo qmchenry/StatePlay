@@ -10,18 +10,41 @@ import SwiftUI
 struct MenuBar: View {
     var body: some View {
         HStack(spacing: 5) {
-            Spacer()
-            icon(Text("_").padding(.bottom, 10))
-                .beveled(.up)
-            icon(Text("❒"))
-                .beveled(.up)
-            icon(Image(systemName: "xmark").font(Font.system(size: 22, weight: .bold)))
-                .beveled(.up)
-                .padding(5)
+            Group {
+                Spacer()
+                Button {
+
+                } label: {
+                    Text("_")
+                        .font(.largeTitle)
+                        .frame(width: 34)
+                        .padding(.bottom, 10)
+                }
+                .frame(width: 34)
+
+                Button {
+
+                } label: {
+                    Text("❒")
+                        .font(.largeTitle)
+                        .frame(width: 34)
+                }
+                .frame(width: 34)
+
+                Button {
+
+                } label: {
+                    Image(systemName: "xmark").font(Font.system(size: 22, weight: .bold))
+                }
+                .frame(width: 34)
+            }
+            .frame(height: 34)
         }
+        .buttonStyle(IconicButtonStyle())
         .font(.largeTitle)
+        .padding(4)
+        .padding(.top, 2)
         .background(Color.black)
-        .padding([.top, .horizontal], 4)
     }
 
     func icon<V>(_ contents: V) -> some View where V: View {

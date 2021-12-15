@@ -7,11 +7,7 @@
 
 import SwiftUI
 
-extension Color {
-    static let fillColor = Color(white: 0.8)
-}
-
-struct ContentView: View {
+struct PlayerStatic: View {
     var body: some View {
         VStack {
             MenuBar()
@@ -95,8 +91,8 @@ struct ContentView: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct PlayerStatic_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        PlayerStatic()
     }
 }

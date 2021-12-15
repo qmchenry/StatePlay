@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A95E225927697C70004EADF2 /* StatePlayApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95E225827697C70004EADF2 /* StatePlayApp.swift */; };
-		A95E225B27697C70004EADF2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95E225A27697C70004EADF2 /* ContentView.swift */; };
+		A95E225B27697C70004EADF2 /* PlayerStatic.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95E225A27697C70004EADF2 /* PlayerStatic.swift */; };
 		A95E225D27697C71004EADF2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A95E225C27697C71004EADF2 /* Assets.xcassets */; };
 		A95E226027697C71004EADF2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A95E225F27697C71004EADF2 /* Preview Assets.xcassets */; };
 		A95E226A27697C71004EADF2 /* StatePlayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95E226927697C71004EADF2 /* StatePlayTests.swift */; };
@@ -17,6 +17,7 @@
 		A95E2283276A40F5004EADF2 /* MenuBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95E2282276A40F5004EADF2 /* MenuBar.swift */; };
 		A95E2285276A41CF004EADF2 /* Bevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95E2284276A41CF004EADF2 /* Bevel.swift */; };
 		A95E2287276A41FD004EADF2 /* IconicButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95E2286276A41FD004EADF2 /* IconicButton.swift */; };
+		A95E2289276A7CA5004EADF2 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95E2288276A7CA5004EADF2 /* Colors.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,7 +40,7 @@
 /* Begin PBXFileReference section */
 		A95E225527697C70004EADF2 /* StatePlay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StatePlay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A95E225827697C70004EADF2 /* StatePlayApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatePlayApp.swift; sourceTree = "<group>"; };
-		A95E225A27697C70004EADF2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		A95E225A27697C70004EADF2 /* PlayerStatic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerStatic.swift; sourceTree = "<group>"; };
 		A95E225C27697C71004EADF2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A95E225F27697C71004EADF2 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		A95E226527697C71004EADF2 /* StatePlayTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StatePlayTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -50,6 +51,7 @@
 		A95E2282276A40F5004EADF2 /* MenuBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBar.swift; sourceTree = "<group>"; };
 		A95E2284276A41CF004EADF2 /* Bevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bevel.swift; sourceTree = "<group>"; };
 		A95E2286276A41FD004EADF2 /* IconicButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconicButton.swift; sourceTree = "<group>"; };
+		A95E2288276A7CA5004EADF2 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,10 +103,11 @@
 			isa = PBXGroup;
 			children = (
 				A95E225827697C70004EADF2 /* StatePlayApp.swift */,
-				A95E225A27697C70004EADF2 /* ContentView.swift */,
+				A95E225A27697C70004EADF2 /* PlayerStatic.swift */,
 				A95E2284276A41CF004EADF2 /* Bevel.swift */,
 				A95E2286276A41FD004EADF2 /* IconicButton.swift */,
 				A95E2282276A40F5004EADF2 /* MenuBar.swift */,
+				A95E2288276A7CA5004EADF2 /* Colors.swift */,
 				A95E225C27697C71004EADF2 /* Assets.xcassets */,
 				A95E225E27697C71004EADF2 /* Preview Content */,
 			);
@@ -267,8 +270,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				A95E2285276A41CF004EADF2 /* Bevel.swift in Sources */,
+				A95E2289276A7CA5004EADF2 /* Colors.swift in Sources */,
 				A95E2287276A41FD004EADF2 /* IconicButton.swift in Sources */,
-				A95E225B27697C70004EADF2 /* ContentView.swift in Sources */,
+				A95E225B27697C70004EADF2 /* PlayerStatic.swift in Sources */,
 				A95E225927697C70004EADF2 /* StatePlayApp.swift in Sources */,
 				A95E2283276A40F5004EADF2 /* MenuBar.swift in Sources */,
 			);

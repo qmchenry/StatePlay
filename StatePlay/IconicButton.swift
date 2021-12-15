@@ -19,6 +19,6 @@ struct IconicButtonStyle: ButtonStyle {
                     .padding()
                     .foregroundColor(.black.opacity(isEnabled ? 1 : 0.4))
             )
-            .beveled(.up)
+            .beveled(configuration.isPressed ? .down : .up)
     }
 }
