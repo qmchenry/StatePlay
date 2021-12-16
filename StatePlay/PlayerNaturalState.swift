@@ -23,14 +23,14 @@ class CDPlayerNatural: ObservableObject {
         Timer
             .publish(every: 1, tolerance: 1, on: .main, in: .common)
             .autoconnect()
-            .sink { [weak self] _ in
-                self?.updatePlayTime()
+            .sink { [self] _ in
+                if self.isPlaying {
+                    self.elapsedPlaySeconds += 1
+                }
+                self.updatePlayTime()
             }
             .store(in: &cancellables)
     }
-
-    // simulating a CD with 10 tracks, with lengths = 10 * (track number starting at 1)
-    var totalTracks = 10
 
     var isNoCDLoaded: Bool {
         !isLoaded || isOpen
@@ -38,6 +38,8 @@ class CDPlayerNatural: ObservableObject {
 
     func stop() {
         isStopped = true
+        isPlaying = false
+        isPaused = false
         currentTrack = 1
         currentTime = "00:00"
     }
@@ -46,9 +48,65 @@ class CDPlayerNatural: ObservableObject {
         isPlaying = true
     }
 
-    func updatePlayTime() {
+    // simulating a CD with 10 tracks, with lengths = 10 * (track number starting at 1)
+    var totalTracks = 10
+
+    var isLastTrack: Bool {
+        currentTrack == totalTracks
+    }
+
+    var isFirstTrack: Bool {
+        currentTrack == 1
+    }
+
+    func previous() {
+        if isFirstTrack {
+            currentTrack = 1
+            stop()
+            return
+        }
+        currentTrack -= 1
+        elapsedPlaySeconds = 0
+        updatePlayTime()
+    }
+
+    func forward() {
         guard isPlaying else { return }
         elapsedPlaySeconds += 1
+        updatePlayTime()
+    }
+
+    func reverse() {
+        guard isPlaying, elapsedPlaySeconds > 0 else { return }
+        elapsedPlaySeconds -= 1
+        updatePlayTime()
+    }
+
+    func next() {
+        if isLastTrack {
+            currentTrack = 1
+            stop()
+            return
+        }
+        currentTrack += 1
+        elapsedPlaySeconds = 0
+        updatePlayTime()
+    }
+
+    func updatePlayTime() {
+        guard isPlaying else { return }
+
+        let currentTrackLength = currentTrack * 10
+        if elapsedPlaySeconds > currentTrackLength {
+            if isLastTrack {
+                isPlaying = false
+                stop()
+                return
+            }
+            currentTrack += 1
+            elapsedPlaySeconds = 0
+        }
+
         let seconds = elapsedPlaySeconds % 60
         let minutes = min(99, elapsedPlaySeconds / 60)
         currentTime = minutes.formatted(.number.precision(.integerLength(2))) + ":" + seconds.formatted(.number.precision(.integerLength(2)))
@@ -65,8 +123,8 @@ struct PlayerNaturalState: View {
                 MenuBar()
 
                 VStack {
-                    HStack(spacing: 40) {
-                        TimelineView(.periodic(from: .now, by: 1)) { timeline in
+                    TimelineView(.periodic(from: .now, by: 1)) { timeline in
+                        HStack(spacing: 40) {
                             // Track label
                             Text("\(player.currentTrack)")
                                 .frame(width: 110, height: 60)
@@ -119,9 +177,7 @@ struct PlayerNaturalState: View {
                             guard !player.isNoCDLoaded else { return }
                             if player.isPlaying {
                                 player.stop()
-                                player.isPlaying = false
                             }
-
                         } label: {
                             Image(systemName: "stop.fill")
                         }
@@ -130,7 +186,7 @@ struct PlayerNaturalState: View {
                         // Previous button
                         Button {
                             guard !player.isNoCDLoaded else { return }
-
+                            player.previous()
                         } label: {
                             Image(systemName: "backward.end.fill")
                         }
@@ -138,7 +194,7 @@ struct PlayerNaturalState: View {
                         // Reverse button
                         Button {
                             guard !player.isNoCDLoaded else { return }
-
+                            player.reverse()
                         } label: {
                             Image(systemName: "backward.fill")
                         }
@@ -146,7 +202,7 @@ struct PlayerNaturalState: View {
                         // Forward button
                         Button {
                             guard !player.isNoCDLoaded else { return }
-
+                            player.forward()
                         } label: {
                             Image(systemName: "forward.fill")
                         }
@@ -154,7 +210,7 @@ struct PlayerNaturalState: View {
                         // Next button
                         Button {
                             guard !player.isNoCDLoaded else { return }
-
+                            player.next()
                         } label: {
                             Image(systemName: "forward.end.fill")
                         }
@@ -213,13 +269,13 @@ struct PlayerNaturalState_Previews: PreviewProvider {
 /// ✅ 12 When in the <CD Stopped> state, the <Time> field shall display 00:00 and the <Track> field shall display [1J.
 /// ✅ 13 When in the <CD Stopped> state, the Pause and Stop buttons shall be disabled.
 /// ✅ 14 When in the <CD Playing> state, the Play button shall be disabled.
-/// 15 When in the <CD Stopped>, <CD Playing> or <CD Paused> states, clicking the Next button when the current track is not the last track on the CD, will cause the CD player to move to the next track, the <Time> field will display 00:00 and the <Track> field shall display the track number.
-/// 16 When in the <CD Stopped>, <CD Playing>, or <CD Paused> states, clicking the Next button when the current track is the last track on the CD, will cause the CD player to move to the first track, the <Time> field will display 00:00, the <Track> field shall display [1] and the <CD Stopped> state will be entered.
-/// 17 When in the <CD Stopped>, <CD Playing> or <CD Paused> states, clicking the Previous button when the current track is not the first track on the CD, will cause the CD player to move to the previous track, the <Time> field will display 00:00 and the <Track> field shall display the track number.
-/// 18 When in the <CD Stopped>, <CD Playing> or <CD Paused> states, clicking the Previous button when the current track is the first track on the CD, will cause the CD player to move to the start of the first track, the <Time> field will display 00:00 and the <Track> field shall display [11.
-/// 19 When in the <CD Stopped>, <CD Playing> or <CD Paused> states, clicking the Forward button down will cause the CD to stop playing and the CD to step forwards through the CD in one-second intervals; each step will take no more than 0.1 seconds. For each step, the <Time> field will display the current track time and the <Track> field will display the current track number. The application will stop stepping through the CD when the user stops holding down the Forward button with the mouse pointer, or the end of the CD is reached. If the end of the CD is reached, the <CD Stopped> state will be entered and the <Time> field will display 00:00 and the <Track> field shall display [1].
-/// 20 When in the <CD Stoppcd>, <CD Playing> or <CD Paused> states, clicking the Reverse button down will cause the CD to stop playing and the CD to step backwards through the CD in one-second intervals; each step will take no more than 0.1 seconds. For each step, the <Time> field will display the current track time and the <Track> field will display the current track number. The application will stop stepping through the CD when the user stops holding down the Reverse button with the mouse pointer, or the start of the CD is reached.
-/// 21 When in the <CD Playing> state, the <Time> field shall be updated every second with the elapsed playing time of the current track and the <Track> field shall display the current track number.
+/// ✅ 15 When in the <CD Stopped>, <CD Playing> or <CD Paused> states, clicking the Next button when the current track is not the last track on the CD, will cause the CD player to move to the next track, the <Time> field will display 00:00 and the <Track> field shall display the track number.
+/// ✅ 16 When in the <CD Stopped>, <CD Playing>, or <CD Paused> states, clicking the Next button when the current track is the last track on the CD, will cause the CD player to move to the first track, the <Time> field will display 00:00, the <Track> field shall display [1] and the <CD Stopped> state will be entered.
+/// ✅ 17 When in the <CD Stopped>, <CD Playing> or <CD Paused> states, clicking the Previous button when the current track is not the first track on the CD, will cause the CD player to move to the previous track, the <Time> field will display 00:00 and the <Track> field shall display the track number.
+/// ✅ 18 When in the <CD Stopped>, <CD Playing> or <CD Paused> states, clicking the Previous button when the current track is the first track on the CD, will cause the CD player to move to the start of the first track, the <Time> field will display 00:00 and the <Track> field shall display [11.
+/// ✅ 19 When in the <CD Stopped>, <CD Playing> or <CD Paused> states, clicking the Forward button down will cause the CD to stop playing and the CD to step forwards through the CD in one-second intervals; each step will take no more than 0.1 seconds. For each step, the <Time> field will display the current track time and the <Track> field will display the current track number. The application will stop stepping through the CD when the user stops holding down the Forward button with the mouse pointer, or the end of the CD is reached. If the end of the CD is reached, the <CD Stopped> state will be entered and the <Time> field will display 00:00 and the <Track> field shall display [1].
+/// ✅ 20 When in the <CD Stoppcd>, <CD Playing> or <CD Paused> states, clicking the Reverse button down will cause the CD to stop playing and the CD to step backwards through the CD in one-second intervals; each step will take no more than 0.1 seconds. For each step, the <Time> field will display the current track time and the <Track> field will display the current track number. The application will stop stepping through the CD when the user stops holding down the Reverse button with the mouse pointer, or the start of the CD is reached.
+/// ✅ 21 When in the <CD Playing> state, the <Time> field shall be updated every second with the elapsed playing time of the current track and the <Track> field shall display the current track number.
 /// 22 When in the <CD Paused> state, the values in the Time and Track fields will be displayed initially and then after one second they will be hidden. After a further second they will be displayed again. This displaying and hiding cycle will continue while the system is in the <CD Paused> state.
 /// 23 When in the <No CD Loaded>, <CD Stopped>, <CD Playing> or <CD Paused> states, the balloon help for the buttons shall be as follows: Stop button = Stop, Previous button = Previous Track, Next button = Next Track, Forwards button = Step Forward, Reverse button = Step Backwards.
 /// 24 When in the <No CD Loaded> state and the CD player door is open, the balloon help for the buttons shall be as follows: Play button = Play, Pause button = Pause, and Eject button = Close.
