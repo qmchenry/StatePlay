@@ -5,6 +5,7 @@
 //  Created by Quinn McHenry on 12/15/21.
 //
 
+import Combine
 import SwiftUI
 
 class CDPlayerNatural: ObservableObject {
@@ -15,6 +16,20 @@ class CDPlayerNatural: ObservableObject {
     @Published var isPaused = false
     @Published var currentTrack = 1
     @Published var currentTime = "00:00"
+    private var elapsedPlaySeconds = 0
+    private var cancellables = Set<AnyCancellable>()
+
+    init() {
+        Timer
+            .publish(every: 1, tolerance: 1, on: .main, in: .common)
+            .autoconnect()
+            .sink { [weak self] _ in
+                self?.updatePlayTime()
+            }
+            .store(in: &cancellables)
+    }
+
+    // simulating a CD with 10 tracks, with lengths = 10 * (track number starting at 1)
     var totalTracks = 10
 
     var isNoCDLoaded: Bool {
@@ -27,6 +42,17 @@ class CDPlayerNatural: ObservableObject {
         currentTime = "00:00"
     }
 
+    func play() {
+        isPlaying = true
+    }
+
+    func updatePlayTime() {
+        guard isPlaying else { return }
+        elapsedPlaySeconds += 1
+        let seconds = elapsedPlaySeconds % 60
+        let minutes = min(99, elapsedPlaySeconds / 60)
+        currentTime = minutes.formatted(.number.precision(.integerLength(2))) + ":" + seconds.formatted(.number.precision(.integerLength(2)))
+    }
 
 }
 
@@ -40,15 +66,18 @@ struct PlayerNaturalState: View {
 
                 VStack {
                     HStack(spacing: 40) {
-                        // Track label
-                        Text("\(player.currentTrack)")
-                            .frame(width: 110, height: 60)
-                            .beveled(.down)
+                        TimelineView(.periodic(from: .now, by: 1)) { timeline in
+                            // Track label
+                            Text("\(player.currentTrack)")
+                                .frame(width: 110, height: 60)
+                                .beveled(.down)
 
-                        // Time label
-                        Text(player.currentTime)
-                            .frame(width: 110, height: 60)
-                            .beveled(.down)
+                            // Time label
+                            Text(player.currentTime)
+                                .monospacedDigit()
+                                .frame(width: 110, height: 60)
+                                .beveled(.down)
+                        }
                     }
                     .font(.largeTitle)
 
